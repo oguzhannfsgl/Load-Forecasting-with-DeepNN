@@ -44,7 +44,7 @@ def main(args):
     lr_reducer = tf.keras.callbacks.ReduceLROnPlateau(monitor="val_loss", patience=3, verbose=1)
     early_stopper = tf.keras.callbacks.EarlyStopping(monitor="val_loss", patience=6, verbose=1, restore_best_weights=True)
 
-    history = model.fit(train_dataset, validation_data=test_dataset, epochs=150, callbacks=[lr_reducer, early_stopper])
+    history = model.fit(train_dataset, validation_data=test_dataset, epochs=args.epochs, callbacks=[lr_reducer, early_stopper])
 
     
     
@@ -53,6 +53,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_from", type=str, default="SPAIN", help="Name of the country which dataset comes from")
     parser.add_argument("--model_name", type=str, default='custom', help="One of 'custom', 'seqmlp', 'deepenergy' ")
+    parser.add_argument("--epochs", type=int, default=150, help="Number of times the entire dataset will be seen in training.")
     parser.add_argument("--input_n", type=int, default=24, help="Number of input time sequence. Default to 24h")
     parser.add_argument("--output_n", type=int, default=24, help="Number of output time sequence. Default to 24h")
     args = parser.parse_args()
